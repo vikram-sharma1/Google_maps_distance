@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles/HomePage.css'
 import { ImLocation } from 'react-icons/im'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import {
     useJsApiLoader,
     GoogleMap,
@@ -15,10 +15,47 @@ const HomePage = () => {
     const originRef = useRef('')
     const destinationRef = useRef('')
 
-    const handleSubmit = () => {
-        console.log(originRef.current.value)
-        console.log(destinationRef.current.value)
-    }
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: `AIzaSyDF1Me5qwzDlxyWLVtIayZdqAI6rcYYyik`,
+        libraries: ['places'],
+      })
+    
+      const [map, setMap] = useState(null)
+      const [directionsResponse, setDirectionsResponse] = useState(null)
+      const [distance, setDistance] = useState('')
+      const [duration, setDuration] = useState('')
+    
+      async function handleSubmit() {
+        if (originRef.current.value === '' || destinationRef.current.value === '') {
+          return
+        }
+        // eslint-disable-next-line no-undef
+        const directionsService = new google.maps.DirectionsService()
+        const results = await directionsService.route({
+          origin: originRef.current.value,
+          destination: destinationRef.current.value,
+          // eslint-disable-next-line no-undef
+          travelMode: google.maps.TravelMode.DRIVING,
+        })
+
+        console.log(1, results)
+        console.log(1, results.routes[0].legs[0].distance.textesults)
+        console.log(1, results.routes[0].legs[0].duration.text)
+        
+        
+
+        setDirectionsResponse(results)
+        setDistance(results.routes[0].legs[0].distance.text)
+        setDuration(results.routes[0].legs[0].duration.text)
+      }
+    
+
+
+    // const handleSubmit = () => {
+    //     console.log(originRef.current.value)
+    //     console.log(destinationRef.current.value)
+    // }
 
     const apikey = `AIzaSyDKOi7-IfT3jAGFW64Migcq8nMMXMv4SjM`
     // const apikey2 = `AIzaSyBYEwlGQaUp7WHWtY5CFkGLw_OpIshXz2Y`
@@ -54,8 +91,7 @@ const HomePage = () => {
         </div>
             </div>
             <div>
-                <h1>Map Box</h1>
-
+                
             </div>
         </div>
 
