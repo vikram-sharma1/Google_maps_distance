@@ -4,7 +4,9 @@ import './styles/MapPage.css'
 const MapPage = () => {
   return (
     <>
-        <div className='mainBoxMap'>MapPage</div>
+        <div className='mainBoxMap'>
+          
+        </div>
     </>
   )
 }

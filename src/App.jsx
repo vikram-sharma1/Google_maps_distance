@@ -8,16 +8,7 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      <div className='flexing'>
-        <div>
       <HomePage/>
-
-        </div>
-        <div>
-      <MapPage/>
-
-        </div>
-      </div>
     </div>
   );
 }
